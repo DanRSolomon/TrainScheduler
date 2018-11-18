@@ -58,29 +58,44 @@ database.ref().on("child_added", function (childSnapshot) {
     var timeArray = firstTrain.split(":");
     var trainTime = moment().hours(timeArray[0]).minutes(timeArray[1]);
     console.log(trainTime);
-    trainTime = moment(trainTime).format('h:mm a');
-    var now = moment().format('h:mm a');
+    trainTime = moment(trainTime).format('x');
+    var now = moment().format('x');
     console.log(trainTime);
     console.log(now);
-    // while(trainTime < now) {
-        trainTime = moment(trainTime).add(frequency, 'm');
-        // trainTime = moment(trainTime).format('h:mm a');
+    while(trainTime < now) {
+        trainTime = moment(trainTime, 'x')
+            .add(frequency, 'm')
+            .format('x');
         console.log(trainTime);
-    // }
+    };
 
+    // var minutesAway = moment().diff(moment(trainTime), "minutes");
 
-    
+    // var minutesAway = moment(now, 'x')
+    //     .subtract(trainTime, 'x')
+    //     .format('x');
+
+    // var minutesAway = moment(moment(trainTime,"MMMM Do YYYY, h:mm:ss a")
+    //                 .to(moment(now,"MMMM Do YYYY, h:mm:ss a"))).format("hh:mm")
+    // minutesAway = moment(minutesAway, 'MMMM Do YYYY, h:mm:ss a').format('mm');
+
+    // var minutesAway = moment().diff(trainTime, "minutes");
+    // minutesAway = moment.duration(minutesAway).asMinutes()
+
+    trainTime = moment(trainTime, 'x').format('h:mm a');
     console.log(trainTime);
     console.log(trainName);
     console.log(destination);
     console.log(frequency);
     console.log(firstTrain);
-  
+    console.log(minutesAway);
+    
     $(`
       <tr>
       <td> ${trainName}</td>
       <td> ${destination}</td>
       <td> ${frequency}</td>
+      <td> ${trainTime}</td>
       </tr>
     `).appendTo('#train-table');
     
